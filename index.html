@@ -9,15 +9,28 @@
 </head>
 
 <body>
-    <h1>Bienvenidos a mi tienda</h1>
-    <!-- From Uiverse.io by Yaya12085 -->
-    <div class="container">
-        <input type="checkbox" name="checkbox" id="checkbox" />
-        <label for="checkbox" class="label"> </label>
-    </div>
+    <header>
+        <h1>Bienvenidos a mi tienda</h1>
+    </header>
+    <main>
+        <section id="product-filter">
+            <h2>Filtrar búsqueda</h2>
+            <form id="filter-form">
+                <label for="searchbar">Buscar</label>
+                <input id="searchbar" placeholder="buscar..." name="searchbar">
+                <label for="price-search">Precio máximo</label>
+                <input id="price-search" placeholder="100" type="number" name="price-search">
+                <label for="category-select">Categoría</label>
+                <select id="category-select">
+                    <option value="all">Todas</option>
+                </select>
 
-    <section id="product-list">
-    </section>
+            </form>
+        </section>
+        <section id="product-list">
+        </section>
+
+    </main>
     <script src="scripts.js"></script>
 </body>
 
