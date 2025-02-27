@@ -1,3 +1,5 @@
+// definición de variables
+
 const productos = [
     // Electrónica
     {
@@ -103,8 +105,114 @@ const productos = [
         categoria: "Deportes"
     }
 ];
+const productosAlternativos = [
+    // Alimentos
+    {
+        id: 1,
+        nombre: "Miel Orgánica",
+        descripcion: "Miel pura de abeja sin aditivos, cosechada de manera sostenible.",
+        precio: 12.99,
+        imagen: "https://example.com/miel.jpg",
+        categoria: "Alimentos"
+    },
+    {
+        id: 2,
+        nombre: "Queso Curado Artesanal",
+        descripcion: "Queso madurado durante 12 meses con un sabor intenso y textura firme.",
+        precio: 24.99,
+        imagen: "https://example.com/queso.jpg",
+        categoria: "Alimentos"
+    },
+    {
+        id: 3,
+        nombre: "Café Molido Premium",
+        descripcion: "Café 100% arábica con notas a chocolate y caramelo.",
+        precio: 18.99,
+        imagen: "https://example.com/cafe.jpg",
+        categoria: "Alimentos"
+    },
+
+    // Juguetes
+    {
+        id: 4,
+        nombre: "Set de Construcción",
+        descripcion: "Más de 500 piezas para construir estructuras y figuras.",
+        precio: 39.99,
+        imagen: "https://example.com/construccion.jpg",
+        categoria: "Juguetes"
+    },
+    {
+        id: 5,
+        nombre: "Muñeco de Peluche",
+        descripcion: "Suave y abrazable, ideal para niños y coleccionistas.",
+        precio: 14.99,
+        imagen: "https://example.com/peluche.jpg",
+        categoria: "Juguetes"
+    },
+    {
+        id: 6,
+        nombre: "Rompecabezas de 1000 Piezas",
+        descripcion: "Desafiante puzzle con una hermosa ilustración de un paisaje.",
+        precio: 19.99,
+        imagen: "https://example.com/rompecabezas.jpg",
+        categoria: "Juguetes"
+    },
+
+    // Jardinería
+    {
+        id: 7,
+        nombre: "Kit de Huerto Urbano",
+        descripcion: "Incluye semillas, sustrato y macetas para iniciar un huerto en casa.",
+        precio: 34.99,
+        imagen: "https://example.com/huerto.jpg",
+        categoria: "Jardinería"
+    },
+    {
+        id: 8,
+        nombre: "Regadera Metálica",
+        descripcion: "Regadera de acero inoxidable con capacidad de 2L.",
+        precio: 22.99,
+        imagen: "https://example.com/regadera.jpg",
+        categoria: "Jardinería"
+    },
+    {
+        id: 9,
+        nombre: "Tierra para Plantas",
+        descripcion: "Sustrato enriquecido con nutrientes para un crecimiento saludable.",
+        precio: 15.99,
+        imagen: "https://example.com/tierra.jpg",
+        categoria: "Jardinería"
+    },
+
+    // Música
+    {
+        id: 10,
+        nombre: "Guitarra Acústica",
+        descripcion: "Guitarra de madera con cuerdas de acero y gran resonancia.",
+        precio: 129.99,
+        imagen: "https://example.com/guitarra.jpg",
+        categoria: "Música"
+    },
+    {
+        id: 11,
+        nombre: "Micrófono de Estudio",
+        descripcion: "Micrófono cardioide ideal para grabaciones de alta calidad.",
+        precio: 89.99,
+        imagen: "https://example.com/microfono.jpg",
+        categoria: "Música"
+    },
+    {
+        id: 12,
+        nombre: "Auriculares de Estudio",
+        descripcion: "Auriculares con sonido neutro para producción musical.",
+        precio: 74.99,
+        imagen: "https://example.com/auriculares.jpg",
+        categoria: "Música"
+    }
+];
 
 
+// definición de funciones
 function crearTarjetaProducto(producto){
     // crear elementos html
     const articulo = document.createElement("article");
@@ -149,6 +257,84 @@ function crearTarjetaProducto(producto){
 
 }
 
-for(let i = 0; i < productos.length; i++){
-    crearTarjetaProducto(productos[i]);
+function crearTarjetasProductos(productos){
+    for(let i = 0; i < productos.length; i++){
+        crearTarjetaProducto(productos[i]);
+    }
 }
+function crearFiltroDeTexto(productos){
+    const searchBar = document.getElementById("searchbar");
+    
+    searchBar.addEventListener("input",(e)=>{
+        const searchTerm = e.target.value; // el texto que buscamos
+        const productCards = document.getElementsByClassName("product"); // lista de elementos con clase product
+        for(let i = 0; i < productCards.length; i++){
+            const productCard = productCards[i];
+            // opcion 1: sacar la informacion del html (desventaja: puede ser necesario limpiar datos )
+            // const nombre = productCard.querySelector("h3").textContent;
+            // const descripcion = productCard.querySelector("p").textContent;
+    
+            // opcion 2: buscar el producto en la lista a partir del id
+            const productId = productCard.id.replace("product-","");
+            const producto = productos.find(p => p.id == productId);
+            const nombre = producto.nombre;
+            const descripcion = producto.descripcion;
+    
+    
+            if(nombre.toLowerCase().includes(searchTerm.toLowerCase()) || descripcion.toLowerCase().includes(searchTerm.toLowerCase())){
+                productCard.classList.remove("hidden");
+            }else{
+                productCard.classList.add("hidden");
+            }
+        }
+    })
+}
+function crearFiltroDePrecio(productos){
+    const priceSearch = document.getElementById("price-search");
+    priceSearch.addEventListener("input",(e)=>{
+        const searchPrice = parseFloat(e.target.value);
+        console.log(searchPrice)
+        const productCards = document.getElementsByClassName("product"); // lista de elementos con clase product
+        for(let i = 0; i < productCards.length; i++){
+            const productCard = productCards[i];
+            // opcion 1: sacar la informacion del html (desventaja: puede ser necesario limpiar datos )
+            // const priceString = productCard.querySelector(".product-price").replace("€","");
+            // const productPrice = parseFloat(priceString);
+
+            // opcion 2: buscar el producto en la lista a partir del id
+            const productId = productCard.id.replace("product-","");
+            const producto = productos.find(p => p.id == productId);
+            const productPrice = producto.precio;
+
+            if(productPrice <= searchPrice || isNaN(searchPrice)){
+                productCard.classList.remove("hidden");
+            }else{
+                productCard.classList.add("hidden");
+            }
+        }
+    })   
+}
+function crearFiltroDeCategorias(productos){
+    const categorias = new Set(); // lista de categorías que no se repitan
+    for(let i = 0; i < productos.length; i++){
+        categorias.add(productos[i].categoria);
+    }
+    const categoriasArray = Array.from(categorias);
+
+    // buscamos el selector
+    const selector = document.getElementById("category-select");
+    for(let i = 0; i < categoriasArray.length; i++){
+        const opcion = document.createElement("option"); // creamos un elemento de tipo 'option'
+        opcion.value =categoriasArray[i]; // le damos un valor
+        opcion.textContent= categoriasArray[i]; // le damos un texto visible
+        selector.appendChild(opcion);// lo añadimos al selector
+    }
+
+}
+// ejecución de funciones
+crearTarjetasProductos(productos)
+
+crearFiltroDeTexto(productos);
+crearFiltroDePrecio(productos);
+crearFiltroDeCategorias(productos);
+
